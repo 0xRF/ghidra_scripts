@@ -9,7 +9,7 @@
 from subprocess import Popen, PIPE
 
 p = Popen(
-    ['rofi', '-dmenu', '-async-pre-read', '0'],
+    ['rofi', '-dmenu', '-matching', 'fuzzy', '-async-pre-read', '0'],
     stdin=PIPE, stdout=PIPE
 )
 

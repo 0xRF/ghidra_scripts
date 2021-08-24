@@ -8,13 +8,16 @@
 from subprocess import Popen, PIPE
 
 p = Popen(
-    ['rofi', '-dmenu', '-async-pre-read', '0'],
+    ['rofi', '-dmenu', '-matching', 'fuzzy', '-async-pre-read', '0'],
     stdin=PIPE, stdout=PIPE
 )
 
+NOTE = currentProgram.bookmarkManager.getBookmarkType('Note')
 
 for bookmark in currentProgram.bookmarkManager.getBookmarksIterator():
-    p.stdin.write("{} {} {}\n".format(bookmark.getId(), bookmark.getComment(), bookmark.getTypeString()))
+    if bookmark.getType().getTypeId() != NOTE.getTypeId():
+        continue
+    p.stdin.write("{} {}\n".format(bookmark.getId(), bookmark.getComment()))
     if p.poll() is not None:
         break
 
